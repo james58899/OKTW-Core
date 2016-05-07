@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/OKTW Core.iml" filepath="$PROJECT_DIR$/.idea/modules/OKTW Core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/OKTW_Core_main.iml" filepath="$PROJECT_DIR$/.idea/modules/OKTW_Core_main.iml" group="OKTW Core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/OKTW_Core_test.iml" filepath="$PROJECT_DIR$/.idea/modules/OKTW_Core_test.iml" group="OKTW Core" />
+    </modules>
+  </component>
+</project>

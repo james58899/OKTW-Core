@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'org.spongepowered.plugin' version '0.5.1'
+}
+
+group 'tw.oktw.sponge'
+version '0.1.1'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.13'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
+
+sourceCompatibility = 1.8
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.spongepowered:spongeapi:4.0.3'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
