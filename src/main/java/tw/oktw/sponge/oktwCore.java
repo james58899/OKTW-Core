@@ -34,7 +34,7 @@ public class oktwCore {
     @Listener
     public void onGameInitialization(GameInitializationEvent event) {
         oktwCore = this;
-        new CommadnManager().start();
+        new CommandLoader().start();
         new EventerManager().start();
         configLoader = new ConfigLoader();
         try {
