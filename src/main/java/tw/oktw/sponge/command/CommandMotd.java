@@ -11,9 +11,12 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.serializer.TextSerializers;
 import tw.oktw.sponge.oktwCore;
 
-public class motd implements CommandExecutor {
+import javax.annotation.Nonnull;
+
+public class CommandMotd implements CommandExecutor {
+    @Nonnull
     @Override
-    public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
+    public CommandResult execute(@Nonnull CommandSource src, @Nonnull CommandContext args) throws CommandException {
         ConfigurationNode config = oktwCore.getOktwCore().getConfig();
         Text motd = TextSerializers.FORMATTING_CODE.deserialize(config.getNode("motd").getString());
         src.sendMessage(motd);

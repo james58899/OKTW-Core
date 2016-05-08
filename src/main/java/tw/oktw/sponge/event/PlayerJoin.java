@@ -1,8 +1,6 @@
 package tw.oktw.sponge.event;
 
 import ninja.leaping.configurate.ConfigurationNode;
-import org.slf4j.Logger;
-import org.spongepowered.api.Server;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
@@ -13,9 +11,6 @@ import tw.oktw.sponge.oktwCore;
 import tw.oktw.sponge.world.WorldManager;
 
 public class PlayerJoin {
-    private Logger logger = oktwCore.getOktwCore().getLogger();
-    private Server server = oktwCore.getOktwCore().getGame().getServer();
-
     @Listener
     public void onPlauerJoin(ClientConnectionEvent.Join event) {
         Player player = event.getTargetEntity();
