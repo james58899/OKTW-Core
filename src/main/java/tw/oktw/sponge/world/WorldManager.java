@@ -16,8 +16,10 @@ public class WorldManager {
     private Server server = oktwCore.getOktwCore().getGame().getServer();
 
     public void onJoin(Player player) {
-        if (server.getWorldProperties(player.getName()).isPresent() & !player.getWorld().getName().equals(player.getName())) {
-            teleport(player);
+        if (server.getWorldProperties(player.getName()).isPresent()) {
+            if (!player.getWorld().getName().equals(player.getName())) {
+                teleport(player);
+            }
         } else {
             createWorld(player);
         }
