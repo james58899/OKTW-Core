@@ -17,7 +17,7 @@ public class CommandSpawn implements CommandExecutor {
     @Override
     public CommandResult execute(@Nonnull CommandSource src, @Nonnull CommandContext args) throws CommandException {
         Player player = args.<Player>getOne("player").get();
-        player.setLocationSafely(player.getWorld().getSpawnLocation());
+        player.setLocationSafely(player.getWorld().getSpawnLocation().add(0, 4, 0));
         return CommandResult.success();
     }
 

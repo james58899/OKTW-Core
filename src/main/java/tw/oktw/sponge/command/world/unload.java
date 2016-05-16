@@ -1,6 +1,7 @@
 package tw.oktw.sponge.command.world;
 
 import org.spongepowered.api.Server;
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -11,13 +12,12 @@ import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.world.storage.WorldProperties;
-import tw.oktw.sponge.oktwCore;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
 
 public class unload implements CommandExecutor {
-    private Server server = oktwCore.getOktwCore().getGame().getServer();
+    private Server server = Sponge.getServer();
 
     @Nonnull
     @Override

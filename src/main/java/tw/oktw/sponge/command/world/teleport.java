@@ -12,11 +12,13 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.world.storage.WorldProperties;
 
+import javax.annotation.Nonnull;
 import java.util.Optional;
 
 public class teleport implements CommandExecutor {
+    @Nonnull
     @Override
-    public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
+    public CommandResult execute(@Nonnull CommandSource src, @Nonnull CommandContext args) throws CommandException {
         Optional<Player> player = args.getOne("player");
         Optional<WorldProperties> world = args.getOne("world");
         if (!player.isPresent()) {
@@ -26,7 +28,7 @@ public class teleport implements CommandExecutor {
             src.sendMessage(Text.of(TextColors.RED, "世界不存在"));
             return CommandResult.empty();
         } else {
-            player.get().transferToWorld(world.get().getUniqueId(), world.get().getSpawnPosition().toDouble());
+            player.get().transferToWorld(world.get().getUniqueId(), world.get().getSpawnPosition().add(0, 4, 0).toDouble());
             return CommandResult.success();
         }
     }

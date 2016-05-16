@@ -1,6 +1,7 @@
 package tw.oktw.sponge.command.world;
 
 import org.spongepowered.api.Server;
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -12,19 +13,18 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.action.TextActions;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.format.TextStyles;
-import tw.oktw.sponge.oktwCore;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
 public class list implements CommandExecutor {
-    private Server server = oktwCore.getOktwCore().getGame().getServer();
+    private Server server = Sponge.getServer();
 
     @Nonnull
     @Override
     public CommandResult execute(@Nonnull CommandSource src, @Nonnull CommandContext args) throws CommandException {
-        PaginationService paginationService = oktwCore.getOktwCore().getGame().getServiceManager().provide(PaginationService.class).get();
+        PaginationService paginationService = Sponge.getServiceManager().provide(PaginationService.class).get();
         List<Text> worlds = new ArrayList<>();
 
         server.getWorlds().forEach(world -> worlds.add(Text.of(

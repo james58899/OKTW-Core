@@ -1,10 +1,11 @@
 package tw.oktw.sponge;
 
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.command.CommandManager;
 import tw.oktw.sponge.command.*;
 
 class CommandLoader {
-    private org.spongepowered.api.command.CommandManager commadnManager = Sponge.getCommandManager();
+    private CommandManager commadnManager = Sponge.getCommandManager();
 
     void start() {
         commadnManager.register(oktwCore.getOktwCore(), new CommandMotd().getSpec(), "motd");

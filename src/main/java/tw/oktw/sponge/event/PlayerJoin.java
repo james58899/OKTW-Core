@@ -20,6 +20,7 @@ public class PlayerJoin {
         Text subtitle = TextSerializers.FORMATTING_CODE.deserialize(config.getNode("title", "subtitle").getString());
         player.sendMessage(motd);
         player.sendTitle(Title.of(title, subtitle));
+
         new WorldManager().onJoin(player);
     }
 }

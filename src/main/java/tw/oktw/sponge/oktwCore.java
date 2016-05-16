@@ -3,7 +3,6 @@ package tw.oktw.sponge;
 import com.google.inject.Inject;
 import ninja.leaping.configurate.ConfigurationNode;
 import org.slf4j.Logger;
-import org.spongepowered.api.Game;
 import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
@@ -11,17 +10,16 @@ import org.spongepowered.api.plugin.Plugin;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.sql.SQLException;
 
 @Plugin(id = "tw.oktw.oktwcore", name = "OKTW Sponge Plugin", version = "0.1.1", description = "OKTW Sponge Plugin")
 public class oktwCore {
     private static tw.oktw.sponge.oktwCore oktwCore;
     private ConfigLoader configLoader;
+    private DatabaseManager databaseManager;
 
     @Inject
     private Logger logger;
-
-    @Inject
-    private Game game;
 
     @Inject
     @ConfigDir(sharedRoot = false)
@@ -37,24 +35,26 @@ public class oktwCore {
         new CommandLoader().start();
         new EventerManager().start();
         configLoader = new ConfigLoader();
+        databaseManager = new DatabaseManager();
         try {
             configLoader.start();
-        } catch (IOException e) {
+            databaseManager.start();
+            logger.info("Plugin loaded!");
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
-        logger.info("Plugin loaded!");
     }
 
     public Logger getLogger() {
         return logger;
     }
 
-    public Game getGame() {
-        return game;
-    }
-
     public ConfigurationNode getConfig() {
         return configLoader.getConfig();
+    }
+
+    public DatabaseManager getDatabaseManager() {
+        return databaseManager;
     }
 
     Path getConfigDir() {

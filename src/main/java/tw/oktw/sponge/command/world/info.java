@@ -1,5 +1,6 @@
 package tw.oktw.sponge.command.world;
 
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -11,7 +12,6 @@ import org.spongepowered.api.service.pagination.PaginationService;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.world.storage.WorldProperties;
-import tw.oktw.sponge.oktwCore;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class info implements CommandExecutor {
     @Nonnull
     @Override
     public CommandResult execute(@Nonnull CommandSource src, @Nonnull CommandContext args) throws CommandException {
-        PaginationService paginationService = oktwCore.getOktwCore().getGame().getServiceManager().provide(PaginationService.class).get();
+        PaginationService paginationService = Sponge.getServiceManager().provide(PaginationService.class).get();
         WorldProperties worldProperties = args.<WorldProperties>getOne("world").get();
         List<Text> worldInfo = new ArrayList<>();
 
@@ -36,7 +36,7 @@ public class info implements CommandExecutor {
         worldInfo.add(Text.of(TextColors.BLUE, "PVP: ", TextColors.NONE, worldProperties.isPVPEnabled()));
         worldInfo.add(Text.of(TextColors.BLUE, "Hardcore: ", TextColors.NONE, worldProperties.isHardcore()));
         worldInfo.add(Text.of(TextColors.BLUE, "Keep Spawn Loaded: ", TextColors.NONE, worldProperties.doesKeepSpawnLoaded()));
-        worldInfo.add(Text.of(TextColors.BLUE, "World Border: ", TextColors.NONE, worldProperties.getWorldBorderDiameter(), " (", worldProperties.getWorldBorderCenter().toString(), ")"));
+        worldInfo.add(Text.of(TextColors.BLUE, "World Border: ", TextColors.NONE, worldProperties.getWorldBorderDiameter(), worldProperties.getWorldBorderCenter().toString()));
         worldInfo.add(Text.of(TextColors.BLUE, "Load On Start: ", TextColors.NONE, worldProperties.loadOnStartup()));
 
         paginationService.builder()
