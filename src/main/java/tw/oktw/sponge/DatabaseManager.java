@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class DatabaseManager {
     private DataSource dataSource;
 
-    void start() throws SQLException {
+    void start() {
         SqlService sql = Sponge.getServiceManager().provide(SqlService.class).get();
         ConfigurationNode config = oktwCore.getOktwCore().getConfig().getNode("mysql");
 
@@ -21,7 +21,11 @@ public class DatabaseManager {
                 config.getNode("username").getString(),
                 config.getNode("password").getString()
         );
-        dataSource = sql.getDataSource(jdbcUrl);
+        try {
+            dataSource = sql.getDataSource(jdbcUrl);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public DataSource getDataSource() {

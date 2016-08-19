@@ -2,17 +2,15 @@ package tw.oktw.sponge;
 
 import com.google.inject.Inject;
 import ninja.leaping.configurate.ConfigurationNode;
+import ninja.leaping.configurate.commented.CommentedConfigurationNode;
+import ninja.leaping.configurate.loader.ConfigurationLoader;
 import org.slf4j.Logger;
-import org.spongepowered.api.config.ConfigDir;
+import org.spongepowered.api.config.DefaultConfig;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.plugin.Plugin;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.sql.SQLException;
-
-@Plugin(id = "tw.oktw.oktwcore", name = "OKTW Sponge Plugin", version = "0.1.1", description = "OKTW Sponge Plugin")
+@Plugin(id = "tw.oktw.oktwcore", name = "OKTW Sponge Plugin", version = "0.1.2", description = "OKTW Sponge Plugin")
 public class oktwCore {
     private static tw.oktw.sponge.oktwCore oktwCore;
     private ConfigLoader configLoader;
@@ -22,8 +20,8 @@ public class oktwCore {
     private Logger logger;
 
     @Inject
-    @ConfigDir(sharedRoot = false)
-    private Path configDir;
+    @DefaultConfig(sharedRoot = false)
+    private ConfigurationLoader<CommentedConfigurationNode> configManager;
 
     public static tw.oktw.sponge.oktwCore getOktwCore() {
         return oktwCore;
@@ -36,13 +34,9 @@ public class oktwCore {
         new EventerManager().start();
         configLoader = new ConfigLoader();
         databaseManager = new DatabaseManager();
-        try {
-            configLoader.start();
-            databaseManager.start();
-            logger.info("Plugin loaded!");
-        } catch (IOException | SQLException e) {
-            e.printStackTrace();
-        }
+        configLoader.start();
+        databaseManager.start();
+        logger.info("Plugin loaded!");
     }
 
     public Logger getLogger() {
@@ -57,7 +51,7 @@ public class oktwCore {
         return databaseManager;
     }
 
-    Path getConfigDir() {
-        return configDir;
+    ConfigurationLoader<CommentedConfigurationNode> getConfigManager() {
+        return configManager;
     }
 }

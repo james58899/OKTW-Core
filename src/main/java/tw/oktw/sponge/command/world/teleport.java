@@ -1,5 +1,6 @@
 package tw.oktw.sponge.command.world;
 
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -10,6 +11,8 @@ import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
+import org.spongepowered.api.world.TeleportHelper;
+import org.spongepowered.api.world.World;
 import org.spongepowered.api.world.storage.WorldProperties;
 
 import javax.annotation.Nonnull;
@@ -19,16 +22,18 @@ public class teleport implements CommandExecutor {
     @Nonnull
     @Override
     public CommandResult execute(@Nonnull CommandSource src, @Nonnull CommandContext args) throws CommandException {
+        TeleportHelper teleportHelper = Sponge.getGame().getTeleportHelper();
         Optional<Player> player = args.getOne("player");
-        Optional<WorldProperties> world = args.getOne("world");
+        Optional<WorldProperties> worldProperties = args.getOne("world");
         if (!player.isPresent()) {
             src.sendMessage(Text.of(TextColors.RED, "未指定玩家"));
             return CommandResult.empty();
-        } else if (!world.isPresent()) {
+        } else if (!worldProperties.isPresent()) {
             src.sendMessage(Text.of(TextColors.RED, "世界不存在"));
             return CommandResult.empty();
         } else {
-            player.get().transferToWorld(world.get().getUniqueId(), world.get().getSpawnPosition().add(0, 4, 0).toDouble());
+            Optional<World> world = Sponge.getServer().loadWorld(worldProperties.get());
+            player.get().setLocation(teleportHelper.getSafeLocation(world.get().getSpawnLocation(), 255, 0).get());
             return CommandResult.success();
         }
     }

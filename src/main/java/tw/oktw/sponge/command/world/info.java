@@ -34,6 +34,7 @@ public class info implements CommandExecutor {
         worldInfo.add(Text.of(TextColors.BLUE, "Difficulty: ", TextColors.NONE, worldProperties.getDifficulty().getName()));
         worldInfo.add(Text.of(TextColors.BLUE, "Spawn Position: ", TextColors.NONE, worldProperties.getSpawnPosition().toString()));
         worldInfo.add(Text.of(TextColors.BLUE, "PVP: ", TextColors.NONE, worldProperties.isPVPEnabled()));
+        worldInfo.add(Text.of(TextColors.BLUE, "CommandBlcok: ", TextColors.NONE, worldProperties.areCommandsAllowed()));
         worldInfo.add(Text.of(TextColors.BLUE, "Hardcore: ", TextColors.NONE, worldProperties.isHardcore()));
         worldInfo.add(Text.of(TextColors.BLUE, "Keep Spawn Loaded: ", TextColors.NONE, worldProperties.doesKeepSpawnLoaded()));
         worldInfo.add(Text.of(TextColors.BLUE, "World Border: ", TextColors.NONE, worldProperties.getWorldBorderDiameter(), worldProperties.getWorldBorderCenter().toString()));

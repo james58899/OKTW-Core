@@ -27,15 +27,9 @@ public class list implements CommandExecutor {
         PaginationService paginationService = Sponge.getServiceManager().provide(PaginationService.class).get();
         List<Text> worlds = new ArrayList<>();
 
-        server.getWorlds().forEach(world -> worlds.add(Text.of(
-                TextActions.showText(Text.of("顯示詳細資訊")),
-                TextActions.runCommand("/world info " + world.getName()),
-                TextStyles.UNDERLINE,
-                world.getName())));
-        server.getUnloadedWorlds().forEach(worldProperties -> worlds.add(Text.of(
+        server.getAllWorldProperties().forEach(worldProperties -> worlds.add(Text.of(
                 TextActions.showText(Text.of("顯示詳細資訊")),
                 TextActions.runCommand("/world info " + worldProperties.getWorldName()),
-                TextColors.GRAY,
                 TextStyles.UNDERLINE,
                 worldProperties.getWorldName())));
 

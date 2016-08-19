@@ -10,9 +10,11 @@ import org.spongepowered.api.text.title.Title;
 import tw.oktw.sponge.oktwCore;
 import tw.oktw.sponge.world.WorldManager;
 
+import java.io.IOException;
+
 public class PlayerJoin {
     @Listener
-    public void onPlauerJoin(ClientConnectionEvent.Join event) {
+    public void onPlauerJoin(ClientConnectionEvent.Join event) throws IOException {
         Player player = event.getTargetEntity();
         ConfigurationNode config = oktwCore.getOktwCore().getConfig();
         Text motd = TextSerializers.FORMATTING_CODE.deserialize(config.getNode("motd").getString());

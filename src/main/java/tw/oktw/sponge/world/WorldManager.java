@@ -10,16 +10,19 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.action.TextActions;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.format.TextStyles;
+import org.spongepowered.api.world.TeleportHelper;
 import org.spongepowered.api.world.World;
-import org.spongepowered.api.world.WorldCreationSettings;
+import org.spongepowered.api.world.WorldArchetype;
 import org.spongepowered.api.world.storage.WorldProperties;
 import tw.oktw.sponge.oktwCore;
 
+import java.io.IOException;
 import java.util.Optional;
 
 public class WorldManager {
     private Logger logger = oktwCore.getOktwCore().getLogger();
     private Server server = Sponge.getServer();
+    private TeleportHelper teleportHelper = Sponge.getGame().getTeleportHelper();
 
     public void onJoin(Player player) {
         String playerUUID = player.getUniqueId().toString().replaceAll("-", "");
@@ -31,17 +34,21 @@ public class WorldManager {
 
         if (server.getWorldProperties(playerUUID).isPresent()) {
             Optional<World> world = server.loadWorld(playerUUID);
-            player.setLocationSafely(world.get().getSpawnLocation().add(0, 4, 0));
+            player.setLocation(teleportHelper.getSafeLocation(world.get().getSpawnLocation(), 255, 0).get());
             player.offer(Keys.GAME_MODE, GameModes.SURVIVAL);
         } else {
-            WorldProperties worldProperties = server.createWorldProperties(WorldCreationSettings.builder()
-                    .name(playerUUID)
-                    .enabled(true)
-                    .loadsOnStartup(false)
-                    .generateSpawnOnLoad(false)
-                    .keepsSpawnLoaded(true)
-                    .build()
-            ).get();
+            WorldProperties worldProperties = null;
+            try {
+                worldProperties = server.createWorldProperties(playerUUID, WorldArchetype.builder()
+                        .enabled(true)
+                        .loadsOnStartup(false)
+                        .generateSpawnOnLoad(false)
+                        .keepsSpawnLoaded(true)
+                        .build(playerUUID, playerUUID)
+                );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             Optional<World> world = server.loadWorld(worldProperties);
             if (world.isPresent()) {
                 double x, z;
@@ -57,13 +64,14 @@ public class WorldManager {
                     .style(TextStyles.UNDERLINE)
                     .onHover(TextActions.showText(Text.of(TextColors.AQUA, "點我傳送到專屬世界")))
                     .onClick(TextActions.executeCallback(commandSource -> {
-                        Optional<World> world1 = server.loadWorld(worldProperties);
+                        Optional<World> world1 = server.loadWorld(playerUUID);
                         if (world1.isPresent()) {
-                            player.setLocationSafely(world1.get().getSpawnLocation().add(0, 4, 0));
+                            player.setLocation(teleportHelper.getSafeLocation(world1.get().getSpawnLocation(), 255, 0).get());
                             player.offer(Keys.GAME_MODE, GameModes.SURVIVAL);
                         }
                     }))
                     .build()
+
             );
         }
     }
